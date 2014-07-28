@@ -10,7 +10,7 @@ scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf
 
 libraryDependencies ++= {
   Seq(
-    "org.specs2" %% "specs2" % "2.3.12" % "test"
+    "org.specs2" %% "specs2" % "2.3.13" % "test"
   )
 }
 
