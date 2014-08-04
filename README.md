@@ -10,10 +10,10 @@ Types of iterators
   - multi-dimensional traversal:
     - matrix row major
     - matrix column major
-      - matrix spiral
-      - tree depth first
-      - tree in-order
-      - tree breadth first
+    - matrix spiral
+    - tree depth first
+    - tree in-order
+    - tree breadth first
 
 
 ### Combining iterator (combines two iterators):
