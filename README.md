@@ -1,5 +1,10 @@
-Types of iterators
-==================
+# Iteratorz
+
+**NOTE:** Please be aware that this project has just started and it's a research
+and learning project for me. Not much is implemented just yet and nothing here
+is production quality.
+
+## Types of iterators
 
 ### Traversing iterator (returns the same number of elements):
 
@@ -31,6 +36,7 @@ Types of iterators
 
 
 ### Splitting iterator (returns two iterators):
+
 *NOTE: Not trivial to implement on infinite iterators. Maybe not even possible.*
 
                 |=> a c d
