@@ -1,5 +1,7 @@
 # Iteratorz
 
+[![Build Status](https://travis-ci.org/detunized/iteratorz.svg?branch=master)](https://travis-ci.org/detunized/iteratorz)
+
 **NOTE:** Please be aware that this project has just started and it's a research
 and learning project for me. Not much is implemented just yet and nothing here
 is production quality.
