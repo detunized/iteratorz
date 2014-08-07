@@ -20,11 +20,11 @@ class AlternatingIteratorSpec extends Specification {
       check(Seq(1, 3, 5), Seq(2, 4, 6), Seq(1, 2, 3, 4, 5, 6))
     }
 
-    "return append longer first sequence" in {
+    "append first sequence tail" in {
       check(Seq(1, 3, 5, 6), Seq(2, 4), Seq(1, 2, 3, 4, 5, 6))
     }
 
-    "return append longer second sequence" in {
+    "append second sequence tail" in {
       check(Seq(1, 3), Seq(2, 4, 5, 6), Seq(1, 2, 3, 4, 5, 6))
     }
   }
