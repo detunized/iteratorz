@@ -5,15 +5,15 @@ import org.specs2.mutable.Specification
 class MergingIteratorSpec extends Specification {
   "MergingIterator" should {
     "have no next on empty iterators" in {
-      check(Seq[Int](), Seq[Int]())
+      check[Int](Seq.empty, Seq.empty)
     }
 
     "return first sequence when second is empty" in {
-      check(Seq(1, 2, 3), Seq[Int]())
+      check(Seq(1, 2, 3), Seq.empty)
     }
 
     "return second sequence when first is empty" in {
-      check(Seq[Int](), Seq(1, 2, 3))
+      check(Seq.empty, Seq(1, 2, 3))
     }
 
     "return first sequence then second" in {

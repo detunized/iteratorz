@@ -5,7 +5,7 @@ import org.specs2.mutable.Specification
 class AlternatingIteratorSpec extends Specification {
   "AlternatingIterator" should {
     "have no next on empty iterators" in {
-      check(Seq[Int](), Seq[Int](), Seq.empty)
+      check(Seq.empty, Seq.empty, Seq.empty)
     }
 
     "return first sequence when second is empty" in {
@@ -32,7 +32,7 @@ class AlternatingIteratorSpec extends Specification {
   private def check[A](a: Seq[A], b: Seq[A], expected: Seq[A]) = {
     val i = new AlternatingIterator(a.iterator, b.iterator)
 
-    for (x <- expected) {
+    expected foreach { x =>
       i.hasNext should beTrue
       i.next() shouldEqual x
     }
