@@ -37,15 +37,6 @@ is production quality.
   - zipping with predicate
 
 
-### Splitting iterator (returns two iterators):
-
-*NOTE: Not trivial to implement on infinite iterators. Maybe not even possible.*
-
-                |=> a c d
-    a b c d e f |
-                |=> b e f
-
-
 ### Grouping iterator (returns sequences):
 
     a b c d e f |=> [a c] [b d e] [f]
