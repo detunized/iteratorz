@@ -11,14 +11,8 @@ class RemappingIterator[A](source: Iterator[A], from: String, to: String)
 }
 
 private object detail {
-  def remap[A](buffer: ArrayBuffer[A], from: String, to: String): Unit = {
+  def remap[A](buffer: ArrayBuffer[A], from: String, to: String): ArrayBuffer[A] = {
     val fromToIndex = from.zipWithIndex.toMap
-    val remapped = ArrayBuffer.tabulate(to.size)(i => buffer(fromToIndex(to(i))))
-    buffer.clear()
-    remapped.copyToBuffer(buffer)
-  }
-
-  def remap[A](buffer: ArrayBuffer[A], m: Map[Int, Int]): Unit = {
-    ArrayBuffer.tabulate(buffer.size)(i => buffer(m(i))).copyToBuffer(buffer)
+    ArrayBuffer.tabulate(to.size)(i => buffer(fromToIndex(to(i))))
   }
 }

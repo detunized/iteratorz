@@ -25,7 +25,7 @@ class PoolingIteratorSpec extends Specification {
   }
 
   def check[A](s: Seq[A], poolSize: Int) = {
-    val i = new PoolingIterator(s.iterator, poolSize)(_ => ())
+    val i = new PoolingIterator(s.iterator, poolSize)(x => x)
 
     // Should be the same as source sequence
     s foreach { x =>
