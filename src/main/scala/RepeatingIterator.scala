@@ -27,6 +27,7 @@ class RepeatingIterator[A](self: Iterator[A])(f: A => Int) extends Iterator[A] {
     while (left == 0 && self.hasNext) {
       current = self.next()
       left = f(current)
+      require(left >= 0)
     }
   }
 }

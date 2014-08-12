@@ -3,14 +3,20 @@ package net.detunized.iteratorz
 import org.specs2.mutable.Specification
 
 class RepeatingIteratorSpec extends Specification {
-  // TODO: Verify negative count!
-
   "is empty on an empty iterator" in {
     checkIsEmpty(mk(Seq[Int]())(x => 1))
   }
 
   "is empty with zero repeat count" in {
     checkIsEmpty(mk(Seq(1, 2, 3))(x => 0))
+  }
+
+  "hasNext throws on negative count" in {
+    mk(Seq(1, 2, 3))(x => -1).hasNext should throwA[IllegalArgumentException]
+  }
+
+  "next throws on negative count" in {
+    mk(Seq(1, 2, 3))(x => -1).next() should throwA[IllegalArgumentException]
   }
 
   "returns the same sequence with repeat count of 1" in {
