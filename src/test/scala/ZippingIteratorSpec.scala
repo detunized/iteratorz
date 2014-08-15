@@ -31,9 +31,6 @@ class ZippingIteratorSpec extends Specification {
       val a = Seq(1, 3, 5)
       val b = Seq(2, 4, 6)
 
-      val x = new ZippingIterator(a.iterator, b.iterator)((_, _) => true)
-      println(x.toVector)
-
       checkTrue(a, b, Seq(1, 2, 3, 4, 5, 6))
       checkFalse(a, b, Seq(2, 1, 4, 3, 6, 5))
     }
