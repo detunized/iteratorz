@@ -2,7 +2,7 @@ package net.detunized.iteratorz
 
 import scala.math.Ordering
 
-class MergingIterator[A](i1: Iterator[A], i2: Iterator[A])(implicit ord: Ordering[A]) extends CombiningIterator[A] {
+class MergingIterator[A](i1: Iterator[A], i2: Iterator[A])(implicit ord: Ordering[A]) extends Iterator[A] {
   private[this] val i1b = i1.buffered
   private[this] val i2b = i2.buffered
 
