@@ -1,39 +1,22 @@
 package net.detunized.iteratorz
 
-import org.specs2.mutable.Specification
-
-class MergingIteratorSpec extends Specification {
-  "MergingIterator" should {
-    "have no next on empty iterators" in {
-      check[Int](Seq.empty, Seq.empty)
-    }
-
-    "return first sequence when second is empty" in {
-      check(Seq(1, 2, 3), Seq.empty)
-    }
-
-    "return second sequence when first is empty" in {
-      check(Seq.empty, Seq(1, 2, 3))
-    }
-
-    "return first sequence then second" in {
-      check(Seq(1, 1, 1), Seq(2, 2, 2))
-    }
-
-    "return second sequence then first" in {
-      check(Seq(2, 2, 2), Seq(1, 1, 1))
-    }
+class MergingIteratorSpec extends IteratorSpec[Int, MergingIterator[Int]] {
+  "return first sequence when second is empty" in {
+    check(mk(Seq(1, 2, 3), Seq.empty[Int]), 1, 2, 3)
   }
 
-  private def check[A](a: Seq[A], b: Seq[A])(implicit ord: Ordering[A]) = {
-    val i = new MergingIterator(a.iterator, b.iterator)
-
-    (a ++ b).sorted foreach { x =>
-      i.hasNext should beTrue
-      i.next() shouldEqual x
-    }
-
-    i.hasNext should beFalse
-    i.next() should throwA[NoSuchElementException]
+  "return second sequence when first is empty" in {
+    check(mk(Seq.empty[Int], Seq(1, 2, 3)), 1, 2, 3)
   }
+
+  "return first sequence then second" in {
+    check(mk(Seq(1, 1, 1), Seq(2, 2, 2)), 1, 1, 1, 2, 2, 2)
+  }
+
+  "return second sequence then first" in {
+    check(mk(Seq(2, 2, 2), Seq(1, 1, 1)), 1, 1, 1, 2, 2, 2)
+  }
+
+  protected def mkEmpty = mk(Seq.empty[T], Seq.empty[T])
+  private[this] def mk(a: Seq[T], b: Seq[T]) = new MergingIterator(a.iterator, b.iterator)
 }
