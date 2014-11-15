@@ -3,6 +3,8 @@ package net.detunized.iteratorz
 import org.specs2.mutable.Specification
 
 trait IteratorSpec[A, I <: Iterator[A]] extends Specification {
+  type T = A
+
   "hasNext must be false on an empty iterator" in {
     mkEmpty.hasNext must beFalse
   }
