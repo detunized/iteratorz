@@ -13,7 +13,7 @@ trait IteratorSpec[A, I <: Iterator[A]] extends Specification {
     mkEmpty.next() must throwA[NoSuchElementException]
   }
 
-  protected def check(it: I, expected: Seq[A]) = {
+  protected def check(it: I, expected: A*) = {
     it.toSeq mustEqual expected
   }
 
