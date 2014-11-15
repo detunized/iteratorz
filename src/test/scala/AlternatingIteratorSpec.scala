@@ -1,6 +1,6 @@
 package net.detunized.iteratorz
 
-class AlternatingIteratorSpec extends IteratorSpec[Int, AlternatingIterator[Int]] {
+class AlternatingIteratorSpec extends IteratorSpec[Int] {
   "return first sequence when second is empty" in {
     check(mk(Seq(1, 2, 3), Seq.empty), 1, 2, 3)
   }

@@ -1,7 +1,7 @@
 package net.detunized.iteratorz
 
-class PackingIteratorSpec extends IteratorSpec[(String, Int), Iterator[(String, Int)]] {
-  type S = String
+class PackingIteratorSpec extends IteratorSpec[(String, Int)] {
+  private[this] type S = String
 
   "pack single elements" in {
     check(mk("A"), ("A", 1))

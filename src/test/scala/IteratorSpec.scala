@@ -2,8 +2,9 @@ package net.detunized.iteratorz
 
 import org.specs2.mutable.Specification
 
-trait IteratorSpec[A, I <: Iterator[A]] extends Specification {
+trait IteratorSpec[A] extends Specification {
   protected type T = A
+  protected type I = Iterator[A]
 
   "hasNext must be false on an empty iterator" in {
     mkEmpty.hasNext must beFalse
@@ -13,7 +14,7 @@ trait IteratorSpec[A, I <: Iterator[A]] extends Specification {
     mkEmpty.next() must throwA[NoSuchElementException]
   }
 
-  protected def check(it: I, expected: A*) = {
+  protected def check(it: I, expected: T*) = {
     it.toSeq mustEqual expected
   }
 

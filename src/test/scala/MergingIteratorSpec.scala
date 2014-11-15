@@ -1,6 +1,6 @@
 package net.detunized.iteratorz
 
-class MergingIteratorSpec extends IteratorSpec[Int, MergingIterator[Int]] {
+class MergingIteratorSpec extends IteratorSpec[Int] {
   "return first sequence when second is empty" in {
     check(mk(Seq(1, 2, 3), Seq.empty[Int]), 1, 2, 3)
   }

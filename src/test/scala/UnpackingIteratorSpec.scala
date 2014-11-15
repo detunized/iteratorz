@@ -1,6 +1,6 @@
 package net.detunized.iteratorz
 
-class UnpackingIteratorSpec extends IteratorSpec[String, UnpackingIterator[String]] {
+class UnpackingIteratorSpec extends IteratorSpec[String] {
   type S = (T, Int)
 
   "unpacks single element" in {
