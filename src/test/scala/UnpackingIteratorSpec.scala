@@ -1,14 +1,9 @@
 package net.detunized.iteratorz
 
-import org.specs2.mutable.Specification
-
-class UnpackingIteratorSpec extends Specification {
-  "have no next on an empty iterator" in {
-    val i = mk(Seq[(String, Int)]())
-
-    i.hasNext must beFalse
-    i.next() must throwA[NoSuchElementException]
-  }
+class UnpackingIteratorSpec extends IteratorSpec[String, UnpackingIterator[String]] {
+  // S -> D
+  type S = (String, Int)
+  type D = String
 
   "unpacks single element" in {
     check(Seq("A" -> 1), Seq("A"))
@@ -39,16 +34,8 @@ class UnpackingIteratorSpec extends Specification {
     check(Seq("A" -> 2, "B" -> -1, "C" -> 0, "D" -> 1), Seq("A", "A", "D"))
   }
 
-  private def mk[A](s: Seq[(A, Int)]) = new UnpackingIterator(s.iterator)
-  private def check[A](s: Seq[(A, Int)], expected: Seq[A]) = {
-    val i = mk(s)
+  private[this] def mk(s: Seq[S]) = new UnpackingIterator(s.iterator)
+  private[this] def check(s: Seq[S], expected: Seq[D]) = super.check(mk(s), expected)
 
-    expected foreach { x =>
-      i.hasNext must beTrue
-      i.next() mustEqual x
-    }
-
-    i.hasNext must beFalse
-    i.next() must throwA[NoSuchElementException]
-  }
+  protected def mkEmpty = mk(Seq.empty[S])
 }
