@@ -20,9 +20,6 @@ trait IteratorSpec[A] extends Specification {
   protected[this] def expandTo(expected: A*) = (it: Iterator[A]) =>
     it.toSeq mustEqual expected
 
-  protected[this] def check(it: I, expected: T*) =
-    it must expandTo(expected:_*)
-
   // Must be provided by the subclass
   protected[this] def mkEmpty: I
 }

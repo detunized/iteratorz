@@ -26,8 +26,7 @@ class ZippingIteratorSpec extends IteratorSpec[Int] {
     mkFalse(1, 3)(2, 4, 5, 6) must expandTo(2, 1, 4, 3, 5, 6)
   }
 
-  protected[this] def mkEmpty =
-    mk()()((_, _) => false)
+  protected[this] def mkEmpty = mk()()((_, _) => false)
 
   private[this] def mk(s1: T*)(s2: T*)(f: (T, T) => Boolean) =
     new ZippingIterator(s1.iterator, s2.iterator)(f)
