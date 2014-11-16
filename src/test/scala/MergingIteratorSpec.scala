@@ -17,6 +17,6 @@ class MergingIteratorSpec extends IteratorSpec[Int] {
     check(mk(Seq(2, 2, 2), Seq(1, 1, 1)), 1, 1, 1, 2, 2, 2)
   }
 
-  protected def mkEmpty = mk(Seq.empty[T], Seq.empty[T])
+  protected[this] def mkEmpty = mk(Seq.empty[T], Seq.empty[T])
   private[this] def mk(a: Seq[T], b: Seq[T]) = new MergingIterator(a.iterator, b.iterator)
 }

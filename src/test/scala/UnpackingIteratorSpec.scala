@@ -32,6 +32,6 @@ class UnpackingIteratorSpec extends IteratorSpec[String] {
     check(mk("A" -> 2, "B" -> -1, "C" -> 0, "D" -> 1), "A", "A", "D")
   }
 
-  protected def mkEmpty = mk()
+  protected[this] def mkEmpty = mk()
   private[this] def mk(s: S*) = new UnpackingIterator(s.iterator)
 }

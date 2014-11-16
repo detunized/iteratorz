@@ -21,6 +21,6 @@ class AlternatingIteratorSpec extends IteratorSpec[Int] {
     check(mk(Seq(1, 3), Seq(2, 4, 5, 6)), 1, 2, 3, 4, 5, 6)
   }
 
-  protected def mkEmpty = mk(Seq.empty[T], Seq.empty[T])
+  protected[this] def mkEmpty = mk(Seq.empty[T], Seq.empty[T])
   private[this] def mk(a: Seq[T], b: Seq[T]) = new AlternatingIterator(a.iterator, b.iterator)
 }

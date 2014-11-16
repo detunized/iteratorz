@@ -22,6 +22,6 @@ class PackingIteratorSpec extends IteratorSpec[(String, Int)] {
     check(mk("A", "A", "B", "C", "C", "C"), "A" -> 2, "B" -> 1, "C" -> 3)
   }
 
-  protected def mkEmpty = mk()
+  protected[this] def mkEmpty = mk()
   private[this] def mk(s: S*) = new PackingIterator(s.iterator)
 }
