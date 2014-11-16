@@ -1,41 +1,25 @@
 package net.detunized.iteratorz
 
-import org.specs2.mutable.Specification
-
-class PoolingIteratorSpec extends Specification {
-  "have no next on an empty iterator" in {
-    checkEmpty(1)
-  }
-
+class PoolingIteratorSpec extends IteratorSpec[Int] {
   "throw on zero pool size" in {
-    checkEmpty(0) should throwA[IllegalArgumentException]
+    mk(0) should throwA[IllegalArgumentException]
   }
 
   "throw on negative pool size" in {
-    checkEmpty(-1) should throwA[IllegalArgumentException]
+    mk(-1) should throwA[IllegalArgumentException]
   }
 
   "return the same sequence with different pool sizes" in {
     val s = Seq(1, 2, 3)
-    check(s, 1)
-    check(s, 2)
-    check(s, 3)
-    check(s, 4)
-    check(s, 5)
+    check(mk(1, s:_*), s:_*)
+    check(mk(2, s:_*), s:_*)
+    check(mk(3, s:_*), s:_*)
+    check(mk(4, s:_*), s:_*)
+    check(mk(5, s:_*), s:_*)
   }
 
-  def check[A](s: Seq[A], poolSize: Int) = {
-    val i = new PoolingIterator(s.iterator, poolSize)(x => x)
+  // TODO: Test that poolFilled callback is called.
 
-    // Should be the same as source sequence
-    s foreach { x =>
-      i.hasNext should beTrue
-      i.next() shouldEqual x
-    }
-
-    i.hasNext should beFalse
-    i.next() should throwA[NoSuchElementException]
-  }
-
-  def checkEmpty(poolSize: Int) = check(Seq[Int](), poolSize)
+  protected[this] def mkEmpty = mk(1)
+  private[this] def mk(poolSize: Int, s: T*) = new PoolingIterator(s.iterator, poolSize)(x => x)
 }
