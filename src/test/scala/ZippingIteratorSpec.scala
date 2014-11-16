@@ -1,72 +1,40 @@
 package net.detunized.iteratorz
 
-import org.specs2.mutable.Specification
-
-class ZippingIteratorSpec extends Specification {
-  "ZippingIterator" should {
-    "have no next on empty iterators" in {
-      checkTrue(Seq.empty, Seq.empty, Seq.empty)
-      checkFalse(Seq.empty, Seq.empty, Seq.empty)
-    }
-
-    "return first sequence when second is empty" in {
-      val a = Seq(1, 2, 3)
-      val b = Seq.empty
-      val e = Seq(1, 2, 3)
-
-      checkTrue(a, b, e)
-      checkFalse(a, b, e)
-    }
-
-    "return second sequence when first is empty" in {
-      val a = Seq.empty
-      val b = Seq(1, 2, 3)
-      val e = Seq(1, 2, 3)
-
-      checkTrue(a, b, e)
-      checkFalse(a, b, e)
-    }
-
-    "return alternating sequence" in {
-      val a = Seq(1, 3, 5)
-      val b = Seq(2, 4, 6)
-
-      checkTrue(a, b, Seq(1, 2, 3, 4, 5, 6))
-      checkFalse(a, b, Seq(2, 1, 4, 3, 6, 5))
-    }
-
-    "append first sequence tail" in {
-      val a = Seq(1, 3, 5, 6)
-      val b = Seq(2, 4)
-
-      checkTrue(a, b, Seq(1, 2, 3, 4, 5, 6))
-      checkFalse(a, b, Seq(2, 1, 4, 3, 5, 6))
-    }
-
-    "append second sequence tail" in {
-      val a = Seq(1, 3)
-      val b = Seq(2, 4, 5, 6)
-
-      checkTrue(a, b, Seq(1, 2, 3, 4, 5, 6))
-      checkFalse(a, b, Seq(2, 1, 4, 3, 5, 6))
-    }
+class ZippingIteratorSpec extends IteratorSpec[Int] {
+  "return first sequence when second is empty" in {
+    mkTrue(1, 2, 3)() must expandTo(1, 2, 3)
+    mkFalse(1, 2, 3)() must expandTo(1, 2, 3)
   }
 
-  private def check[A](a: Seq[A], b: Seq[A], expected: Seq[A])(f: (A, A) => Boolean) = {
-    val i = new ZippingIterator(a.iterator, b.iterator)(f)
-
-    expected foreach { x =>
-      i.hasNext should beTrue
-      i.next() shouldEqual x
-    }
-
-    i.hasNext should beFalse
-    i.next() should throwA[NoSuchElementException]
+  "return second sequence when first is empty" in {
+    mkTrue()(1, 2, 3) must expandTo(1, 2, 3)
+    mkFalse()(1, 2, 3) must expandTo(1, 2, 3)
   }
 
-  private def checkTrue[A](a: Seq[A], b: Seq[A], expected: Seq[A]) =
-    check(a, b, expected)((_, _) => true)
+  "return alternating sequence" in {
+    mkTrue(1, 3, 5)(2, 4, 6) must expandTo(1, 2, 3, 4, 5, 6)
+    mkFalse(1, 3, 5)(2, 4, 6) must expandTo(2, 1, 4, 3, 6, 5)
+  }
 
-  private def checkFalse[A](a: Seq[A], b: Seq[A], expected: Seq[A]) =
-    check(a, b, expected)((_, _) => false)
+  "append first sequence tail" in {
+    mkTrue(1, 3, 5, 6)(2, 4) must expandTo(1, 2, 3, 4, 5, 6)
+    mkFalse(1, 3, 5, 6)(2, 4) must expandTo(2, 1, 4, 3, 5, 6)
+  }
+
+  "append second sequence tail" in {
+    mkTrue(1, 3)(2, 4, 5, 6) must expandTo(1, 2, 3, 4, 5, 6)
+    mkFalse(1, 3)(2, 4, 5, 6) must expandTo(2, 1, 4, 3, 5, 6)
+  }
+
+  protected[this] def mkEmpty =
+    mk()()((_, _) => false)
+
+  private[this] def mk(s1: T*)(s2: T*)(f: (T, T) => Boolean) =
+    new ZippingIterator(s1.iterator, s2.iterator)(f)
+
+  private[this] def mkTrue(s1: T*)(s2: T*) =
+    mk(s1:_*)(s2:_*)((_, _) => true)
+
+  private[this] def mkFalse(s1: T*)(s2: T*) =
+    mk(s1:_*)(s2:_*)((_, _) => false)
 }
