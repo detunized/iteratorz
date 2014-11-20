@@ -1,6 +1,7 @@
 package net.detunized.iteratorz
 
-class ZippingIterator[A](i1: Iterator[A], i2: Iterator[A])(takeFirst: (A, A) => Boolean) extends Iterator[A] {
+class ZippingIterator[A](i1: Iterator[A], i2: Iterator[A])
+                        (takeFirst: (A, A) => Boolean) extends Iterator[A] {
   private[this] var nextA: A = _
   private[this] var nextDefined = false
 

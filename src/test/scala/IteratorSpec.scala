@@ -14,11 +14,11 @@ trait IteratorSpec[A] extends Specification {
     mkEmpty.next() must throwA[NoSuchElementException]
   }
 
-  protected[this] def beEmpty = (it: Iterator[A]) =>
-    it.toSeq must be empty
+  protected[this] def beEmpty =
+    (it: Iterator[A]) => it.toSeq must be empty
 
-  protected[this] def expandTo(expected: A*) = (it: Iterator[A]) =>
-    it.toSeq mustEqual expected
+  protected[this] def expandTo(expected: A*) =
+    (it: Iterator[A]) => it.toSeq mustEqual expected
 
   // Must be provided by the subclass
   protected[this] def mkEmpty: I
