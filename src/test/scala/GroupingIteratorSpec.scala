@@ -4,15 +4,19 @@ class GroupingIteratorSpec extends IteratorSpec[IndexedSeq[Int]] {
   type S = Int
 
   "group single elements" in {
-    mk(1)((_, _) => false) must expandTo(s(1))
-    mk(1, 2)((_, _) => false) must expandTo(s(1), s(2))
-    mk(1, 2, 3)((_, _) => false) must expandTo(s(1), s(2), s(3))
+    def f(e: S, group: T) = false
+
+    mk(1)(f) must expandTo(s(1))
+    mk(1, 2)(f) must expandTo(s(1), s(2))
+    mk(1, 2, 3)(f) must expandTo(s(1), s(2), s(3))
   }
 
   "group all elements into a single group" in {
-    mk(1)((_, _) => true) must expandTo(s(1))
-    mk(1, 2)((_, _) => true) must expandTo(s(1, 2))
-    mk(1, 2, 3)((_, _) => true) must expandTo(s(1, 2, 3))
+    def f(e: S, group: T) = true
+
+    mk(1)(f) must expandTo(s(1))
+    mk(1, 2)(f) must expandTo(s(1, 2))
+    mk(1, 2, 3)(f) must expandTo(s(1, 2, 3))
   }
 
   "group same elements" in {
