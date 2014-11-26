@@ -13,6 +13,9 @@ abort("#{spec_filename} already exists") if File.exists? spec_filename
 
 File.open(class_filename, "w") do |io|
     io.write <<-EOT
+// Copyright (C) #{Time.new.year} Dmitry Yakimenko (detunized@gmail.com).
+// Licensed under the terms of the MIT license. See LICENCE for details.
+
 package net.detunized.iteratorz
 
 class #{name}Iterator[A](source: Iterator[A]) extends Iterator[A] {
@@ -25,6 +28,9 @@ end
 
 File.open(spec_filename, "w") do |io|
     io.write <<-EOT
+// Copyright (C) #{Time.new.year} Dmitry Yakimenko (detunized@gmail.com).
+// Licensed under the terms of the MIT license. See LICENCE for details.
+
 package net.detunized.iteratorz
 
 class #{name}IteratorSpec extends IteratorSpec[Int] {
