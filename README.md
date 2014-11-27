@@ -6,70 +6,109 @@
 and learning project for me. Not much is implemented just yet and nothing here
 is production quality.
 
-## Types of iterators
+## Types of iterators (in alphabetical order)
 
-### Traversing iterator (returns the same number of elements):
-
-    a b c d e f |=> c a b e f d
-
-  - remapping iterator: a b c -> c a b
-  - shuffling iterator
-  - multi-dimensional traversal:
-    - matrix row major
-    - matrix column major
-    - matrix spiral
-    - tree depth first
-    - tree in-order
-    - tree breadth first
-
-
-### Combining iterator (combines two iterators):
+### Alternating iterator
 
     A B C D E F |
                 |=> A a B b C c D d E F
     a b c d     |
 
-  - merging iterator (sorted iterators)
-  - merging with predicate
-  - alternating
-  - alternating with ratio (a a a) + (b b b) -> (a a b a a b a a b)
-  - zipping
-  - zipping with predicate
+Alternates between two sequences. Produces single sequence where elements are
+interleaved.
 
 
-### Grouping iterator (returns sequences):
+### Buffering iterator
 
-    a b c d e f |=> [a c] [b d e] [f]
+    a b c d e f | => a b c d e f
 
-  - grouping with predicate
-  - grouping by key
-  - matrix rows
-  - matrix columns
-
-
-### Flattening iterator (takes sequences):
-
-    [a c] [b d e] [f] |=> a b c d e f
-
-  - flatten with depth
+Buffering iterator produces the same sequence. Elements of the underlying sequence
+are cached in a fixed size buffer in batches. Whenever the buffer is exhausted it's
+filled up again.
 
 
-### Regrouping iterator (takes and returns sequences):
+### Grouping by key iterator
 
-    [a b c] [d e] [f] |=> [a e] [b c d f]
+    a A a b c C C D d d d |=> [a A a] [b] [c C C] [D d d d]
 
-  - transposing iterator
-
-
-### Collapsing iterator:
-
-    a b c d e f |=> g h i
-
-  - removing duplicates iterator
+Groups sequential elements by the same key produced by the mapping function.
 
 
-### Expanding iterator:
+### Grouping iterator
 
-    a b c |=> d e f g h i
+    a b c d e f |=> [a] [b c] [d e f]
 
-  - repeating iterator
+Groups sequential elements by the predicate.
+
+
+### Merging iterator
+
+    a c f g h |
+              |=> a b c d e f g h
+    b d e     |
+
+Merges two sorted sequences into a single sorted one.
+
+
+### Packing iterator
+
+    a a a b c c d d d |=> (a, 3) (b, 1) (c, 2) (d, 3)
+
+Packs the identical sequential elements into pairs of elements and counts (RLE).
+
+
+### Pooling iterator
+
+    a b c d e f | => a b c d e f
+
+Similar to the buffering iterator. Every time the internal buffer is filled up
+the user supplied function is called which can alter the buffered sequence.
+
+
+### Remapping iterator
+
+    Mapping: "xyz" -> "yx"
+    a b c d e f | => b a e d
+
+Remaps sequential subsequences according to the supplied substitution pattern.
+It's possible to remove, swap and duplicate elements via the mapping.
+
+
+### Repeating iterator
+
+    a b c | => a a b b b c
+
+Repeats elements the number of times returned by the user function.
+
+
+### Shuffling iterator
+
+    a b c d e f g | => d c a b e g f
+
+Shuffles elements inside a given window of fixed size. The returned sequence
+looks fairly random with window of big enough size.
+
+
+### Skipping iterator
+
+    a b c d e f g | => a b f g
+
+Keeps some elements and skips some with a give ration in a repeating pattern.
+
+
+### Unpacking iterator
+
+    (a, 3) (b, 1) (c, 2) (d, 3) |=> a a a b c c d d d
+
+The opposite of the packing iterator. Unpacks pairs of elements and counts
+into a single sequence of repeating elements.
+
+
+### Zipping iterator
+
+    A B C D E F |
+                |=> a A B b c C D d E F
+    a b c d     |
+
+Zips two sequences into one every time inserting the elements in the order
+returned by the user function.
