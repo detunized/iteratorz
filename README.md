@@ -65,6 +65,16 @@ Similar to the buffering iterator. Every time the internal buffer is filled up
 the user supplied function is called which can alter the buffered sequence.
 
 
+### Prefetching iterator
+
+    a b c d e f | => a b c d e f
+
+Prefetching iterator produces the same sequence. It is very similar to the buffering 
+iterator with one notable difference: the prefetching is happening in the background
+in a parallel thread of execution. This could be useful when iterating over a
+network stream of objects for example. 
+
+
 ### Remapping iterator
 
     Mapping: "xyz" -> "yx"
